@@ -1,7 +1,7 @@
 {
-    "name": "creof/doctrine2-spatial",
+    "name": "serhiiorlovs/doctrine2-spatial",
     "type": "library",
-    "description": "Doctrine2 multi-platform support for spatial types and functions",
+    "description": "Doctrine2 multi-platform support for spatial types and functions with fixed ST_ support",
     "keywords": ["orm", "dbal", "database", "postgresql", "mysql", "opengis", "postgis", "gis", "spatial", "geometry", "geography"],
     "authors": [
         {
