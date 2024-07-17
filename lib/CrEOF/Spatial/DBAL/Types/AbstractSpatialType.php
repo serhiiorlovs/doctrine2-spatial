@@ -30,6 +30,8 @@ use CrEOF\Spatial\PHP\Types\Geography\GeographyInterface;
 use CrEOF\Spatial\PHP\Types\Geometry\GeometryInterface;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Platforms\AbstractMySQLPlatform;
+use Doctrine\DBAL\Platforms\PostgreSQLPlatform;
 
 /**
  * Abstract Doctrine GEOMETRY type
@@ -201,10 +203,11 @@ abstract class AbstractSpatialType extends Type
      */
     private function getSpatialPlatform(AbstractPlatform $platform)
     {
-        $const = sprintf('self::PLATFORM_%s', strtoupper($platform->getName()));
+        $const = $platform instanceof AbstractMySQLPlatform ? 'self::PLATFORM_MYSQL' :
+            ($platform instanceof PostgreSQLPlatform ? 'self::PLATFORM_POSTGRESQL' : null);
 
         if (! defined($const)) {
-            throw new UnsupportedPlatformException(sprintf('DBAL platform "%s" is not currently supported.', $platform->getName()));
+            throw new UnsupportedPlatformException(sprintf('DBAL platform "%s" is not currently supported.', get_class($platform)));
         }
 
         $class = sprintf('CrEOF\Spatial\DBAL\Platform\%s', constant($const));
